@@ -122,15 +122,19 @@ public class ColorSlider extends JPanel {
         final ObservableColor color = new ObservableColor(51, 0, 111);
         
         //Add a PCL that prints to the console. 
-        color.addPropertyChangeListener(new PropertyChangeListener() {
-            
-            @Override
-            public void propertyChange(final PropertyChangeEvent theEvent) {
+        color.addPropertyChangeListener(theEvent -> {
                 if (ObservableColor.PROPERTY_COLOR.equals(theEvent.getPropertyName())) {
                     System.out.println(theEvent.getNewValue().toString());
                 }
             }
-        });
+        );
+
+        color.addPropertyChangeListener(theEvent -> {
+                    if (ObservableColor.PROPERTY_COLOR.equals(theEvent.getPropertyName())) {
+                        System.err.println(theEvent.getNewValue().toString());
+                    }
+                }
+        );
 
         
         //Create and set up the content pane.

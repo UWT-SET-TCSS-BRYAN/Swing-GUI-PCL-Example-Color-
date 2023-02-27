@@ -1,8 +1,11 @@
 package model;
 
 import java.awt.Color;
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -43,7 +46,9 @@ public class ObservableColor implements PropertyChangeEnabledMutableColor {
     private static final int MAX_SINGLE_DIGIT_HEX = 16;
     
     /** The. */
-    private final PropertyChangeSupport myPcs;
+//    private final PropertyChangeSupport myPcs;
+
+    private final List<PropertyChangeListener> myListeners;
     
     /** The color's red component. */
     private int myRed;
@@ -82,7 +87,8 @@ public class ObservableColor implements PropertyChangeEnabledMutableColor {
         myRed = theRed;
         myGreen = theGreen;
         myBlue = theBlue;
-        myPcs = new PropertyChangeSupport(this);
+        myListeners = new ArrayList<>();
+//        myPcs = new PropertyChangeSupport(this);
     }
 
     @Override
@@ -97,8 +103,12 @@ public class ObservableColor implements PropertyChangeEnabledMutableColor {
         }
         final int old = myRed;
         myRed = theRed;
-        myPcs.firePropertyChange(PROPERTY_RED, old, myRed);
-        myPcs.firePropertyChange(PROPERTY_COLOR, null, getColor());
+        final PropertyChangeEvent event = new PropertyChangeEvent(this, PROPERTY_RED, old, myRed);
+        for (final PropertyChangeListener listener: myListeners) {
+            listener.propertyChange(event);
+        }
+//        myPcs.firePropertyChange(PROPERTY_RED, old, myRed);
+//        myPcs.firePropertyChange(PROPERTY_COLOR, null, getColor());
     }
 
     @Override
@@ -113,8 +123,12 @@ public class ObservableColor implements PropertyChangeEnabledMutableColor {
         }
         final int old = myGreen;
         myGreen = theGreen;
-        myPcs.firePropertyChange(PROPERTY_GREEN, old, myGreen);
-        myPcs.firePropertyChange(PROPERTY_COLOR, null, getColor());
+        final PropertyChangeEvent event = new PropertyChangeEvent(this, PROPERTY_GREEN, old, myGreen);
+        for(final PropertyChangeListener listener: myListeners) {
+            listener.propertyChange(event);
+        }
+//        myPcs.firePropertyChange(PROPERTY_GREEN, old, myGreen);
+//        myPcs.firePropertyChange(PROPERTY_COLOR, null, getColor());
     }
 
     @Override
@@ -130,8 +144,12 @@ public class ObservableColor implements PropertyChangeEnabledMutableColor {
         }
         final int old = myBlue;
         myBlue = theBlue;
-        myPcs.firePropertyChange(PROPERTY_BLUE, old, myBlue);
-        myPcs.firePropertyChange(PROPERTY_COLOR, null, getColor());
+        final PropertyChangeEvent event = new PropertyChangeEvent(this, PROPERTY_BLUE, old, myBlue);
+        for(final PropertyChangeListener listener: myListeners) {
+            listener.propertyChange(event);
+        }
+//        myPcs.firePropertyChange(PROPERTY_BLUE, old, myBlue);
+//        myPcs.firePropertyChange(PROPERTY_COLOR, null, getColor());
     }
     
     /**
@@ -179,24 +197,26 @@ public class ObservableColor implements PropertyChangeEnabledMutableColor {
 
     @Override
     public void addPropertyChangeListener(final PropertyChangeListener theListener) {
-        myPcs.addPropertyChangeListener(theListener);
+        myListeners.add(theListener);
+//        myPcs.addPropertyChangeListener(theListener);
     }
 
     @Override
     public void addPropertyChangeListener(final String thePropertyName,
                                           final PropertyChangeListener theListener) {
-        myPcs.addPropertyChangeListener(thePropertyName, theListener);
+//        myPcs.addPropertyChangeListener(thePropertyName, theListener);
     }
 
     @Override
     public void removePropertyChangeListener(final PropertyChangeListener theListener) {
-        myPcs.removePropertyChangeListener(theListener);
+        myListeners.remove(theListener);
+        //        myPcs.removePropertyChangeListener(theListener);
     }
 
     @Override
     public void removePropertyChangeListener(final String thePropertyName,
                                              final PropertyChangeListener theListener) {
-        myPcs.removePropertyChangeListener(thePropertyName, theListener);
+//        myPcs.removePropertyChangeListener(thePropertyName, theListener);
     }
     
 }

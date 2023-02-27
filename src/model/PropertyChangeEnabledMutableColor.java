@@ -28,7 +28,7 @@ public interface PropertyChangeEnabledMutableColor extends MutableColor {
     /**
      * A property name for the current Light in the simulation.
      */
-    String PROPERTY_RED = "red";
+    String PROPERTY_RED = "it doesnt matter what the actual value is!!!!!!";
     
     /**
      * A property name for the current vehicle state in the simulation.

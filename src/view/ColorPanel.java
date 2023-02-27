@@ -25,7 +25,7 @@ public class ColorPanel extends JPanel implements PropertyChangeListener {
     private static final long serialVersionUID = 8385732728740430466L;
 
     /** The background color. */
-    private Color myColor;
+//    private Color myColor;
     
     /**
      * Create a color panel with the supplied color.
@@ -34,23 +34,24 @@ public class ColorPanel extends JPanel implements PropertyChangeListener {
     public ColorPanel(final Color theColor) {
         super();
         setBackground(theColor);
-        myColor = theColor;
+//        myColor = theColor;
     }
     
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
+        Color color = getBackground();
         if (PROPERTY_COLOR.equals(theEvent.getPropertyName())) {
-            myColor = (Color) theEvent.getNewValue();
+            color = (Color) theEvent.getNewValue();
         } else if (PROPERTY_RED.equals(theEvent.getPropertyName())) {
             final int r = (Integer) theEvent.getNewValue();
-            myColor = new Color(r, myColor.getGreen(), myColor.getBlue());
+            color = new Color(r, color.getGreen(), color.getBlue());
         } else if (PROPERTY_GREEN.equals(theEvent.getPropertyName())) {
             final int g = (Integer) theEvent.getNewValue();
-            myColor = new Color(myColor.getRed(), g, myColor.getBlue());
+            color = new Color(color.getRed(), g, color.getBlue());
         } else if (PROPERTY_BLUE.equals(theEvent.getPropertyName())) {
             final int b = (Integer) theEvent.getNewValue();
-            myColor = new Color(myColor.getRed(), myColor.getGreen(), b);
+            color = new Color(color.getRed(), color.getGreen(), b);
         }  
-        setBackground(myColor);
+        setBackground(color);
     }
 }

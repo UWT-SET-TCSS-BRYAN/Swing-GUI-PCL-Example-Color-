@@ -146,7 +146,7 @@ public class ColorSlider extends JPanel {
         //ObservableColor.
         final ColorPanel cop = new ColorPanel(color.getColor());
         cop.setPreferredSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE));
-        color.addPropertyChangeListener(ObservableColor.PROPERTY_COLOR, cop);
+        color.addPropertyChangeListener(cop);
         
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
